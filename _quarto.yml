@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  margin-header: subscribe.html
+  margin-footer: subscribe.html
   title: "Actionable Learning Institute"
   site-url: https://actionable-blog-posts.netlify.app/
   navbar:
