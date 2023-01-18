@@ -1,0 +1,86 @@
+---
+title: "EDA using correlationfunnel"
+author: "Eddwin Cheteni"
+date: "2023-01-15"
+categories: 
+    - machine learning
+    - correlationfunnel 
+    - eda 
+    - business science
+    - skimr
+---
+
+###  Aggregate and visualize with `correlalationfunnel`
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Data Exploration
+library(tidyverse)
+library(skimr)
+library(lubridate)
+library(tidytext)
+library(timetk)
+library(gt)
+library(dataxray)
+# color pallete
+library(tidyquant)
+
+# modeling
+library(tidymodels)
+library(modeltime)
+
+# Visualization
+library(ggplot2)
+library(correlationfunnel)
+```
+
+### Loading the `bike_orderlines` dataset
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+bikes_tbl <- read_csv("./bike_orderlines.csv")%>%
+  mutate_if(is.character, as_factor)%>%
+  rename(category = category_1, sub_category = category_2)
+```
+
+### Descriptive analysis with `skimr`
+
+A general overview of the data
+
+```{r}
+#| label: fig-airquality
+#| fig-cap: Temperature and ozone level.
+#| warning: false
+skimr::skim_without_charts(bikes_tbl)
+```
+
+As we can see, our dataset have:
+
+-   1 datetime variable,
+
+-   7 categorical variables,
+
+-   5 numeric variables.
+
+Fortunately no missing values in the data. From the factor summary, shops from **Kansas city** contributed to the most bike sales which is from the **Kansas State**. Surprisingly, shops from **Ithaca city** have least bike sales which is from the **NY state** instead of **AZ state** as indicated on the summary. **Elite road mountain** bikes with **carbon** material have more bike sales. Trail road bikes with **aluminium** have the least number of bike sales.
+
+Add more granular time variables (month, quarter & year)
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+sales <- bikes_tbl %>%
+  mutate(month = month(order_date, abbr = FALSE,
+                       label = TRUE,
+                       locale = Sys.setlocale("LC_COLLATE", "C")),
+         quarter = quarter(order_date),
+         year = year(order_date))
+```
+
+### 2.3 Correlation of features
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+sales%>%
+  select(-c(price, order_line, order_date, order_id))%>%
+  binarize()%>%
+  correlate(target = total_price__5330_Inf)%>%
+  plot_correlation_funnel(interactive = TRUE, alpha = 5)
+```
+
+For a quick correlation analysis, we observe that bike model, frame material, quantity, category and sub category do significantly affect large sales volume.

@@ -1,7 +1,7 @@
 ---
-title: "Welcome To My Blog"
-author: "Tristan O'Malley"
-date: "2023-01-15"
+title: "Welcome To Actionable Learning Blog"
+author: "Eddwin Cheteni"
+date: "2023-01-02"
 categories: [news]
 ---
 

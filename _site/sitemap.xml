@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://actionable-blog-posts.netlify.app/about.html</loc>
+    <lastmod>2023-01-18T06:51:08.654Z</lastmod>
+  </url>
+  <url>
+    <loc>https://actionable-blog-posts.netlify.app/index.html</loc>
+    <lastmod>2023-01-18T10:14:50.959Z</lastmod>
+  </url>
+  <url>
+    <loc>https://actionable-blog-posts.netlify.app/myblog.html</loc>
+    <lastmod>2023-01-18T10:49:32.673Z</lastmod>
+  </url>
+  <url>
+    <loc>https://actionable-blog-posts.netlify.app/posts/post-with-code/index.html</loc>
+    <lastmod>2023-01-18T10:14:50.406Z</lastmod>
+  </url>
+  <url>
+    <loc>https://actionable-blog-posts.netlify.app/posts/welcome/index.html</loc>
+    <lastmod>2023-01-18T09:43:38.759Z</lastmod>
+  </url>
+  <url>
+    <loc>https://actionable-blog-posts.netlify.app/posts/eda-using-correlationfunnel/eda-with-correlationfunnel.html</loc>
+    <lastmod>2023-01-18T10:12:02.681Z</lastmod>
+  </url>
+</urlset>
