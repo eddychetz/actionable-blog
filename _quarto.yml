@@ -17,8 +17,8 @@ website:
 format:
   html:
     theme:
-      dark: solar
-      light: litera
+      dark: darkly
+      light: lightly
     css: styles.css
 editor: visual
 

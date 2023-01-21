@@ -189,9 +189,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <h1 class="title">Correlation Analysis with R</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">problem-solving</div>
+                <div class="quarto-category">intermediate</div>
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">correlation</div>
-                <div class="quarto-category">analysis</div>
               </div>
                   </div>
   </div>
@@ -237,56 +237,51 @@ Build your problem-solving skills
 </div>
 </div>
 <div class="callout-body-container callout-body">
-
+<p>For a data science team to build a good model, in-depth correlation analysis may be the best tool to consider.</p>
 </div>
 </div>
-<div class="callout-important callout callout-style-simple no-icon callout-captioned">
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Correlation analysis using <code>correlationfunnel</code> package in 10 minutes.
+Import Data
 </div>
 </div>
 <div class="callout-body-container callout-body">
-
-</div>
-</div>
-<p>For a Data Science team to build a good model, in-depth correlation analysis maybe the best tool to consider. This article is mainly focused on the use of <code>correlationfunnel</code> library to perform Correlation Analysis of the available data provided.</p>
-<p>Import the important libraries to perform correlation analysis.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># for data wrangling</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(correlationfunnel) <span class="co"># for correlation analysis</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DataExplorer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./train.csv"</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as_factor)<span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Loan_ID)<span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Credit_History =</span> <span class="fu">as_factor</span>(Credit_History))<span class="sc">%&gt;%</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 614
-Columns: 12
-$ Gender            &lt;fct&gt; Male, Male, Male, Male, Male, Male, Male, Male, Male…
-$ Married           &lt;fct&gt; No, Yes, Yes, Yes, No, Yes, Yes, Yes, Yes, Yes, Yes,…
-$ Dependents        &lt;fct&gt; 0, 1, 0, 0, 0, 2, 0, 3+, 2, 1, 2, 2, 2, 0, 2, 0, 1, …
-$ Education         &lt;fct&gt; Graduate, Graduate, Graduate, Not Graduate, Graduate…
-$ Self_Employed     &lt;fct&gt; No, No, Yes, No, No, Yes, No, No, No, No, No, NA, No…
-$ ApplicantIncome   &lt;dbl&gt; 5849, 4583, 3000, 2583, 6000, 5417, 2333, 3036, 4006…
-$ CoapplicantIncome &lt;dbl&gt; 0, 1508, 0, 2358, 0, 4196, 1516, 2504, 1526, 10968, …
-$ LoanAmount        &lt;dbl&gt; NA, 128, 66, 120, 141, 267, 95, 158, 168, 349, 70, 1…
-$ Loan_Amount_Term  &lt;dbl&gt; 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 36…
-$ Credit_History    &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, NA, …
-$ Property_Area     &lt;fct&gt; Urban, Rural, Urban, Urban, Urban, Urban, Urban, Sem…
-$ Loan_Status       &lt;fct&gt; Y, N, Y, Y, Y, Y, Y, N, Y, N, Y, Y, Y, N, Y, Y, Y, N…</code></pre>
+<p>We need to import data needed for correlation analysis. In this case, we use data for <strong>Home Loan</strong> applicants to perform the analysis.</p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skim_without_charts</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>click here to view code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./train.csv"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="fu">mutate_if</span>(is.character, as_factor)<span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="fu">select</span>(<span class="sc">-</span>Loan_ID)<span class="sc">%&gt;%</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="fu">mutate</span>(<span class="at">Credit_History =</span> <span class="fu">as_factor</span>(Credit_History))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+A Quick Summary using <code>skimr</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can perform a quick inspection of your data using <code>skimr</code>. This enables you to understand the overview of your data properties, shape, number of missing values, and descriptive summary.</p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>click here to view code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">skim_without_charts</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Data summary</caption>
@@ -497,15 +492,101 @@ $ Loan_Status       &lt;fct&gt; Y, N, Y, Y, Y, Y, Y, N, Y, N, Y, Y, Y, N, Y, Y, 
 </table>
 </div>
 </div>
+<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+A quick summary using <code>DataExplorer</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()<span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">binarize</span>()<span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correlate</span>(<span class="at">target =</span> Loan_Status__Y)<span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_correlation_funnel</span>(<span class="at">interactive =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>click here to view code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(DataExplorer)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>data<span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">plot_missing</span>(</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="at">ggtheme =</span> <span class="fu">theme_classic</span>(), </span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="at">theme_config =</span> <span class="fu">list</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"top"</span>)),</span>
+<span id="cb3-6"><a href="#cb3-6"></a>    <span class="at">title =</span> <span class="st">"Missing value plot showing percentage of missing data points"</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-12a5357afafab4f0d10c" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-12a5357afafab4f0d10c">{"x":{"data":[{"x":[0,0],"y":[0.4,12.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(255,0,0,1)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,-1,-0.529389754719164,0.529389754719164,0.155685524978308,0.124249956066913,-0.124249956066913,-0.11232088535577,0.11232088535577,-0.110817132815319,0.0733682827013096,0.0684371971413729,-0.0684371971413729,-0.0659065972476278,0.0645042973595199,-0.0645042973595199,0.0625101750102424,0.0607696170809638,-0.0559637210315496,-0.0403501444638633,-0.0360902663692541,0.0347148324453601,-0.0347148324453601,-0.0312550875051212,0.0239828036250867,-0.022938137045909,-0.0208367250034141,0.0176737638590072,-0.0104183625017071,-0.00578368136653423,0.00320347918457836,0.00240481837440589],"y":[12,12,11,11,10,9,9,8,8,10,7,6,6,5,4,4,3,5,10,7,3,2,2,1,1,7,3,1,1,7,5,5],"text":["Loan_Status<br />Bin: Y<br />Correlation: 1","Loan_Status<br />Bin: N<br />Correlation: -1","Credit_History<br />Bin: 0<br />Correlation: -0.529","Credit_History<br />Bin: 1<br />Correlation: 0.529","Property_Area<br />Bin: Semiurban<br />Correlation: 0.156","Loan_Amount_Term<br />Bin: -Inf_360<br />Correlation: 0.124","Loan_Amount_Term<br />Bin: 360_Inf<br />Correlation: -0.124","Married<br />Bin: No<br />Correlation: -0.112","Married<br />Bin: Yes<br />Correlation: 0.112","Property_Area<br />Bin: Rural<br />Correlation: -0.111","Dependents<br />Bin: 2<br />Correlation: 0.073","Education<br />Bin: Graduate<br />Correlation: 0.068","Education<br />Bin: Not_Graduate<br />Correlation: -0.068","LoanAmount<br />Bin: 170_Inf<br />Correlation: -0.066","Gender<br />Bin: Male<br />Correlation: 0.065","Gender<br />Bin: Female<br />Correlation: -0.065","CoapplicantIncome<br />Bin: 1084.5_2253.25<br />Correlation: 0.063","LoanAmount<br />Bin: 128_170<br />Correlation: 0.061","Property_Area<br />Bin: Urban<br />Correlation: -0.056","Dependents<br />Bin: 1<br />Correlation: -0.04","CoapplicantIncome<br />Bin: -Inf_1084.5<br />Correlation: -0.036","Self_Employed<br />Bin: No<br />Correlation: 0.035","Self_Employed<br />Bin: Yes<br />Correlation: -0.035","ApplicantIncome<br />Bin: 5852.5_Inf<br />Correlation: -0.031","ApplicantIncome<br />Bin: 2898.75_3859<br />Correlation: 0.024","Dependents<br />Bin: 0<br />Correlation: -0.023","CoapplicantIncome<br />Bin: 2253.25_Inf<br />Correlation: -0.021","ApplicantIncome<br />Bin: 3859_5852.5<br />Correlation: 0.018","ApplicantIncome<br />Bin: -Inf_2898.75<br />Correlation: -0.01","Dependents<br />Bin: 3+<br />Correlation: -0.006","LoanAmount<br />Bin: 100_128<br />Correlation: 0.003","LoanAmount<br />Bin: -Inf_100<br />Correlation: 0.002"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(44,62,80,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(44,62,80,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":124.931506849315},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187},"title":{"text":"Correlation Funnel","font":{"color":"rgba(44,62,80,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-1.1,1.1],"tickmode":"array","ticktext":["-1.0","-0.5","0.0","0.5","1.0"],"tickvals":[-1,-0.5,0,0.5,1],"categoryorder":"array","categoryarray":["-1.0","-0.5","0.0","0.5","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(204,204,204,1)","ticklen":3.65296803652968,"tickwidth":0.22139200221392,"showticklabels":true,"tickfont":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.22139200221392,"zeroline":false,"anchor":"y","title":{"text":"correlation","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,12.6],"tickmode":"array","ticktext":["ApplicantIncome","Self_Employed","CoapplicantIncome","Gender","LoanAmount","Education","Dependents","Married","Loan_Amount_Term","Property_Area","Credit_History","Loan_Status"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12],"categoryorder":"array","categoryarray":["ApplicantIncome","Self_Employed","CoapplicantIncome","Gender","LoanAmount","Education","Dependents","Married","Loan_Amount_Term","Property_Area","Credit_History","Loan_Status"],"nticks":null,"ticks":"outside","tickcolor":"rgba(204,204,204,1)","ticklen":3.65296803652968,"tickwidth":0.22139200221392,"showticklabels":true,"tickfont":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.22139200221392,"zeroline":false,"anchor":"x","title":{"text":"feature","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(44,62,80,1)","width":0.33208800332088,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"293c66724a3f":{"xintercept":{},"type":"scatter"},"293c554368b6":{"x":{},"y":{},"text":{}}},"cur_data":"293c66724a3f","visdat":{"293c66724a3f":["function (y) ","x"],"293c554368b6":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+A Quick Summary using <code>dataxray</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>click here to view code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">library</span>(dataxray)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">library</span>(DT)</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">library</span>(gt)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>data<span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">make_xray</span>(<span class="at">by =</span> <span class="st">'Loan_Status'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 22 × 14
+   Loan_St…¹ ORDER TYPE  VAR   LABEL FORMAT UNITS     n missing disti…² counts…³
+   &lt;fct&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;  
+ 1 Y             1 CHAR  Gend… &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;    414       8       2 &lt;tibble&gt;
+ 2 Y             2 CHAR  Marr… &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;    419       3       2 &lt;tibble&gt;
+ 3 Y             3 CHAR  Depe… &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;    413       9       4 &lt;tibble&gt;
+ 4 Y             4 CHAR  Educ… &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;    422       0       2 &lt;tibble&gt;
+ 5 Y             5 CHAR  Self… &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;    399      23       2 &lt;tibble&gt;
+ 6 Y             6 NUM   Appl… &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;    422       0     364 &lt;tibble&gt;
+ 7 Y             7 NUM   Coap… &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;    422       0     215 &lt;tibble&gt;
+ 8 Y             8 NUM   Loan… &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;    411      11     161 &lt;tibble&gt;
+ 9 Y             9 NUM   Loan… &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;    414       8       9 &lt;tibble&gt;
+10 Y            10 CHAR  Cred… &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;    385      37       2 &lt;tibble&gt;
+# … with 12 more rows, 3 more variables: values_df &lt;list&gt;, extremes_df &lt;list&gt;,
+#   spike_hist &lt;list&gt;, and abbreviated variable names ¹​Loan_Status, ²​distinct,
+#   ³​counts_df</code></pre>
+</div>
+</div>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Correlation Analysis using <code>correlationfunnel</code>.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This section focused on the use of the <code>correlationfunnel</code> library to perform <strong>Correlation Analysis</strong> for the available data provided.</p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>click here to view code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(correlationfunnel)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>data<span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">na.omit</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">binarize</span>(<span class="at">n_bins =</span> <span class="dv">5</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">correlate</span>(<span class="at">target =</span> Loan_Status__Y)<span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="fu">plot_correlation_funnel</span>(<span class="at">interactive =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e826a53b599a492b2a34" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-e826a53b599a492b2a34">{"x":{"data":[{"x":[0,0],"y":[0.4,12.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(255,0,0,1)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,-1,-0.529389754719164,0.529389754719164,0.155685524978308,0.124249956066913,-0.124249956066913,-0.11232088535577,0.11232088535577,-0.110817132815319,0.0733682827013096,0.0727514692789498,0.0684371971413729,-0.0684371971413729,0.0645042973595199,-0.0645042973595199,0.0599158396292757,-0.0559637210315496,-0.0496241162577244,0.0406015496654108,-0.0403501444638633,-0.0383459080173325,0.0347148324453601,-0.0347148324453601,-0.022938137045909,-0.0174349354563768,-0.0157894915365487,-0.0157894915365487,-0.0122643951101503,-0.00802023050155658,-0.00578368136653423,-0.00451128329615676,-0.00451128329615676,-0.00370960563008177],"y":[12,12,11,11,10,9,9,8,8,10,7,6,5,5,4,4,3,10,6,2,7,3,1,1,7,3,2,2,6,6,7,2,2,6],"text":["Loan_Status<br />Bin: Y<br />Correlation: 1","Loan_Status<br />Bin: N<br />Correlation: -1","Credit_History<br />Bin: 0<br />Correlation: -0.529","Credit_History<br />Bin: 1<br />Correlation: 0.529","Property_Area<br />Bin: Semiurban<br />Correlation: 0.156","Loan_Amount_Term<br />Bin: -Inf_360<br />Correlation: 0.124","Loan_Amount_Term<br />Bin: 360_Inf<br />Correlation: -0.124","Married<br />Bin: No<br />Correlation: -0.112","Married<br />Bin: Yes<br />Correlation: 0.112","Property_Area<br />Bin: Rural<br />Correlation: -0.111","Dependents<br />Bin: 2<br />Correlation: 0.073","LoanAmount<br />Bin: 115.6_138<br />Correlation: 0.073","Education<br />Bin: Graduate<br />Correlation: 0.068","Education<br />Bin: Not_Graduate<br />Correlation: -0.068","Gender<br />Bin: Male<br />Correlation: 0.065","Gender<br />Bin: Female<br />Correlation: -0.065","CoapplicantIncome<br />Bin: 1666_2500.8<br />Correlation: 0.06","Property_Area<br />Bin: Urban<br />Correlation: -0.056","LoanAmount<br />Bin: 184.2_Inf<br />Correlation: -0.05","ApplicantIncome<br />Bin: 2624_3417.6<br />Correlation: 0.041","Dependents<br />Bin: 1<br />Correlation: -0.04","CoapplicantIncome<br />Bin: 2500.8_Inf<br />Correlation: -0.038","Self_Employed<br />Bin: No<br />Correlation: 0.035","Self_Employed<br />Bin: Yes<br />Correlation: -0.035","Dependents<br />Bin: 0<br />Correlation: -0.023","CoapplicantIncome<br />Bin: -Inf_1666<br />Correlation: -0.017","ApplicantIncome<br />Bin: -Inf_2624<br />Correlation: -0.016","ApplicantIncome<br />Bin: 4351.6_6386.4<br />Correlation: -0.016","LoanAmount<br />Bin: -Inf_95<br />Correlation: -0.012","LoanAmount<br />Bin: 95_115.6<br />Correlation: -0.008","Dependents<br />Bin: 3+<br />Correlation: -0.006","ApplicantIncome<br />Bin: 3417.6_4351.6<br />Correlation: -0.005","ApplicantIncome<br />Bin: 6386.4_Inf<br />Correlation: -0.005","LoanAmount<br />Bin: 138_184.2<br />Correlation: -0.004"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(44,62,80,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(44,62,80,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":124.931506849315},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187},"title":{"text":"Correlation Funnel","font":{"color":"rgba(44,62,80,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-1.1,1.1],"tickmode":"array","ticktext":["-1.0","-0.5","0.0","0.5","1.0"],"tickvals":[-1,-0.5,0,0.5,1],"categoryorder":"array","categoryarray":["-1.0","-0.5","0.0","0.5","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(204,204,204,1)","ticklen":3.65296803652968,"tickwidth":0.22139200221392,"showticklabels":true,"tickfont":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.22139200221392,"zeroline":false,"anchor":"y","title":{"text":"correlation","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,12.6],"tickmode":"array","ticktext":["Self_Employed","ApplicantIncome","CoapplicantIncome","Gender","Education","LoanAmount","Dependents","Married","Loan_Amount_Term","Property_Area","Credit_History","Loan_Status"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12],"categoryorder":"array","categoryarray":["Self_Employed","ApplicantIncome","CoapplicantIncome","Gender","Education","LoanAmount","Dependents","Married","Loan_Amount_Term","Property_Area","Credit_History","Loan_Status"],"nticks":null,"ticks":"outside","tickcolor":"rgba(204,204,204,1)","ticklen":3.65296803652968,"tickwidth":0.22139200221392,"showticklabels":true,"tickfont":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.22139200221392,"zeroline":false,"anchor":"x","title":{"text":"feature","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(44,62,80,1)","width":0.33208800332088,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"3f3c551f1be9":{"xintercept":{},"type":"scatter"},"3f3c37f0392a":{"x":{},"y":{},"text":{}}},"cur_data":"3f3c551f1be9","visdat":{"3f3c551f1be9":["function (y) ","x"],"3f3c37f0392a":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 
