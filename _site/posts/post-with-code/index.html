@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Harlow Malloc">
-<meta name="dcterms.date" content="2023-01-18">
+<meta name="author" content="Eddwin Cheteni">
+<meta name="dcterms.date" content="2023-01-21">
 
-<title>Actionable Learning Institute - Post With Code</title>
+<title>Actionable Learning Institute - Correlation Analysis with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -125,12 +125,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="../../site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<script src="../../site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="../../site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="../../site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="../../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="../../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="../../site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="../../site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -178,10 +186,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Post With Code</h1>
+      <h1 class="title">Correlation Analysis with R</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">problem-solving</div>
                 <div class="quarto-category">code</div>
+                <div class="quarto-category">correlation</div>
                 <div class="quarto-category">analysis</div>
               </div>
                   </div>
@@ -193,14 +202,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Harlow Malloc </p>
+               <p>Eddwin Cheteni </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 18, 2023</p>
+        <p class="date">January 21, 2023</p>
       </div>
     </div>
     
@@ -211,56 +220,298 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
-<span style="font-weight: 600;">Subscribe</span>
-
-<!-- Begin Mailchimp Signup Form -->
-<link href="http://cdn-images.mailchimp.com/embedcode/slim-10_7_dtp.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-    #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif;  width:170px;}
-    /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
-       We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-    #mc-embedded-subscribe-form{margin-left:-5px;}
-</style>
-<div id="mc_embed_signup">
-<form action="<site_url>" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
-    <div id="mc_embed_signup_scroll">
-
-    <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required="">
-    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f718424fc5df77c22533bdaa6_a3c37fb57b" tabindex="-1" value=""></div>
-        <div class="optionalParent">
-            <div class="clear foot" style="margin-top: 10px;">
-                <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
-                <p class="brandingLogo"></p>
-            </div>
-        </div>
-    </div>
-</form>
-</div>
-
-<!--End mc_embed_signup-->
-
-</div></div>
-        
-    </div>
+    
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<p>This is a post with executable code.</p>
+<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Build your problem-solving skills
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<div class="callout-important callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Correlation analysis using <code>correlationfunnel</code> package in 10 minutes.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<p>For a Data Science team to build a good model, in-depth correlation analysis maybe the best tool to consider. This article is mainly focused on the use of <code>correlationfunnel</code> library to perform Correlation Analysis of the available data provided.</p>
+<p>Import the important libraries to perform correlation analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># for data wrangling</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(correlationfunnel) <span class="co"># for correlation analysis</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DataExplorer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./train.csv"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as_factor)<span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Loan_ID)<span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Credit_History =</span> <span class="fu">as_factor</span>(Credit_History))<span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<pre><code>Rows: 614
+Columns: 12
+$ Gender            &lt;fct&gt; Male, Male, Male, Male, Male, Male, Male, Male, Male…
+$ Married           &lt;fct&gt; No, Yes, Yes, Yes, No, Yes, Yes, Yes, Yes, Yes, Yes,…
+$ Dependents        &lt;fct&gt; 0, 1, 0, 0, 0, 2, 0, 3+, 2, 1, 2, 2, 2, 0, 2, 0, 1, …
+$ Education         &lt;fct&gt; Graduate, Graduate, Graduate, Not Graduate, Graduate…
+$ Self_Employed     &lt;fct&gt; No, No, Yes, No, No, Yes, No, No, No, No, No, NA, No…
+$ ApplicantIncome   &lt;dbl&gt; 5849, 4583, 3000, 2583, 6000, 5417, 2333, 3036, 4006…
+$ CoapplicantIncome &lt;dbl&gt; 0, 1508, 0, 2358, 0, 4196, 1516, 2504, 1526, 10968, …
+$ LoanAmount        &lt;dbl&gt; NA, 128, 66, 120, 141, 267, 95, 158, 168, 349, 70, 1…
+$ Loan_Amount_Term  &lt;dbl&gt; 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 36…
+$ Credit_History    &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, NA, …
+$ Property_Area     &lt;fct&gt; Urban, Rural, Urban, Urban, Urban, Urban, Urban, Sem…
+$ Loan_Status       &lt;fct&gt; Y, N, Y, Y, Y, Y, Y, N, Y, N, Y, Y, Y, N, Y, Y, Y, N…</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skim_without_charts</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">data</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">614</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: left;">ordered</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: left;">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Gender</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Mal: 489, Fem: 112</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Married</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Yes: 398, No: 213</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dependents</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">0: 345, 1: 102, 2: 101, 3+: 51</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Education</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Gra: 480, Not: 134</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Self_Employed</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">No: 500, Yes: 82</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Credit_History</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">1: 475, 0: 89</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Property_Area</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Sem: 233, Urb: 202, Rur: 179</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Loan_Status</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Y: 422, N: 192</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ApplicantIncome</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">5403.46</td>
+<td style="text-align: right;">6109.04</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">2877.5</td>
+<td style="text-align: right;">3812.5</td>
+<td style="text-align: right;">5795.00</td>
+<td style="text-align: right;">81000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CoapplicantIncome</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1621.25</td>
+<td style="text-align: right;">2926.25</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1188.5</td>
+<td style="text-align: right;">2297.25</td>
+<td style="text-align: right;">41667</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LoanAmount</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0.96</td>
+<td style="text-align: right;">146.41</td>
+<td style="text-align: right;">85.59</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">128.0</td>
+<td style="text-align: right;">168.00</td>
+<td style="text-align: right;">700</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Loan_Amount_Term</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">342.00</td>
+<td style="text-align: right;">65.12</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">360.0</td>
+<td style="text-align: right;">360.0</td>
+<td style="text-align: right;">360.00</td>
+<td style="text-align: right;">480</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">binarize</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correlate</span>(<span class="at">target =</span> Loan_Status__Y)<span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_correlation_funnel</span>(<span class="at">interactive =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-12a5357afafab4f0d10c" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-12a5357afafab4f0d10c">{"x":{"data":[{"x":[0,0],"y":[0.4,12.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(255,0,0,1)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,-1,-0.529389754719164,0.529389754719164,0.155685524978308,0.124249956066913,-0.124249956066913,-0.11232088535577,0.11232088535577,-0.110817132815319,0.0733682827013096,0.0684371971413729,-0.0684371971413729,-0.0659065972476278,0.0645042973595199,-0.0645042973595199,0.0625101750102424,0.0607696170809638,-0.0559637210315496,-0.0403501444638633,-0.0360902663692541,0.0347148324453601,-0.0347148324453601,-0.0312550875051212,0.0239828036250867,-0.022938137045909,-0.0208367250034141,0.0176737638590072,-0.0104183625017071,-0.00578368136653423,0.00320347918457836,0.00240481837440589],"y":[12,12,11,11,10,9,9,8,8,10,7,6,6,5,4,4,3,5,10,7,3,2,2,1,1,7,3,1,1,7,5,5],"text":["Loan_Status<br />Bin: Y<br />Correlation: 1","Loan_Status<br />Bin: N<br />Correlation: -1","Credit_History<br />Bin: 0<br />Correlation: -0.529","Credit_History<br />Bin: 1<br />Correlation: 0.529","Property_Area<br />Bin: Semiurban<br />Correlation: 0.156","Loan_Amount_Term<br />Bin: -Inf_360<br />Correlation: 0.124","Loan_Amount_Term<br />Bin: 360_Inf<br />Correlation: -0.124","Married<br />Bin: No<br />Correlation: -0.112","Married<br />Bin: Yes<br />Correlation: 0.112","Property_Area<br />Bin: Rural<br />Correlation: -0.111","Dependents<br />Bin: 2<br />Correlation: 0.073","Education<br />Bin: Graduate<br />Correlation: 0.068","Education<br />Bin: Not_Graduate<br />Correlation: -0.068","LoanAmount<br />Bin: 170_Inf<br />Correlation: -0.066","Gender<br />Bin: Male<br />Correlation: 0.065","Gender<br />Bin: Female<br />Correlation: -0.065","CoapplicantIncome<br />Bin: 1084.5_2253.25<br />Correlation: 0.063","LoanAmount<br />Bin: 128_170<br />Correlation: 0.061","Property_Area<br />Bin: Urban<br />Correlation: -0.056","Dependents<br />Bin: 1<br />Correlation: -0.04","CoapplicantIncome<br />Bin: -Inf_1084.5<br />Correlation: -0.036","Self_Employed<br />Bin: No<br />Correlation: 0.035","Self_Employed<br />Bin: Yes<br />Correlation: -0.035","ApplicantIncome<br />Bin: 5852.5_Inf<br />Correlation: -0.031","ApplicantIncome<br />Bin: 2898.75_3859<br />Correlation: 0.024","Dependents<br />Bin: 0<br />Correlation: -0.023","CoapplicantIncome<br />Bin: 2253.25_Inf<br />Correlation: -0.021","ApplicantIncome<br />Bin: 3859_5852.5<br />Correlation: 0.018","ApplicantIncome<br />Bin: -Inf_2898.75<br />Correlation: -0.01","Dependents<br />Bin: 3+<br />Correlation: -0.006","LoanAmount<br />Bin: 100_128<br />Correlation: 0.003","LoanAmount<br />Bin: -Inf_100<br />Correlation: 0.002"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(44,62,80,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(44,62,80,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":124.931506849315},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187},"title":{"text":"Correlation Funnel","font":{"color":"rgba(44,62,80,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-1.1,1.1],"tickmode":"array","ticktext":["-1.0","-0.5","0.0","0.5","1.0"],"tickvals":[-1,-0.5,0,0.5,1],"categoryorder":"array","categoryarray":["-1.0","-0.5","0.0","0.5","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(204,204,204,1)","ticklen":3.65296803652968,"tickwidth":0.22139200221392,"showticklabels":true,"tickfont":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.22139200221392,"zeroline":false,"anchor":"y","title":{"text":"correlation","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,12.6],"tickmode":"array","ticktext":["ApplicantIncome","Self_Employed","CoapplicantIncome","Gender","LoanAmount","Education","Dependents","Married","Loan_Amount_Term","Property_Area","Credit_History","Loan_Status"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12],"categoryorder":"array","categoryarray":["ApplicantIncome","Self_Employed","CoapplicantIncome","Gender","LoanAmount","Education","Dependents","Married","Loan_Amount_Term","Property_Area","Credit_History","Loan_Status"],"nticks":null,"ticks":"outside","tickcolor":"rgba(204,204,204,1)","ticklen":3.65296803652968,"tickwidth":0.22139200221392,"showticklabels":true,"tickfont":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.22139200221392,"zeroline":false,"anchor":"x","title":{"text":"feature","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(44,62,80,1)","width":0.33208800332088,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"293c66724a3f":{"xintercept":{},"type":"scatter"},"293c554368b6":{"x":{},"y":{},"text":{}}},"cur_data":"293c66724a3f","visdat":{"293c66724a3f":["function (y) ","x"],"293c554368b6":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 
 
 
-</main> <!-- /main -->
+<p>subscribe.html</p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

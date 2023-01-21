@@ -1,13 +1,56 @@
 ---
-title: "Post With Code"
+title: "Correlation Analysis with R"
 author: "Eddwin Cheteni"
-date: "2023-01-15"
-categories: [news, code, analysis]
+date: "2023-01-21"
+categories: [problem-solving, code, correlation, analysis]
 image: "image.jpg"
 ---
 
-This is a post with executable code.
+::: {.callout-note appearance="simple"}
+## Build your problem-solving skills
+:::
+
+::: {.callout-important appearance="minimal"}
+### Correlation analysis using `correlationfunnel` package in 10 minutes.
+:::
+
+For a Data Science team to build a good model, in-depth correlation analysis maybe the best tool to consider. This article is mainly focused on the use of `correlationfunnel` library to perform Correlation Analysis of the available data provided.
+
+Import the important libraries to perform correlation analysis.
 
 ```{r}
-1 + 1
+#| echo: true
+#| message: false
+#| warning: false
+
+library(tidyverse) # for data wrangling
+library(correlationfunnel) # for correlation analysis
+library(DT)
+library(DataExplorer)
 ```
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+data <- read_csv("./train.csv")%>%
+  mutate_if(is.character, as_factor)%>%
+  select(-Loan_ID)%>%
+  mutate(Credit_History = as_factor(Credit_History))%>%
+  glimpse()
+```
+```{r}
+library(skimr)
+skim_without_charts(data)
+```
+
+
+```{r}
+data%>%
+  na.omit()%>%
+  binarize()%>%
+  correlate(target = Loan_Status__Y)%>%
+  plot_correlation_funnel(interactive = TRUE)
+```
+
