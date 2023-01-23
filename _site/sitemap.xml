@@ -6,11 +6,11 @@
   </url>
   <url>
     <loc>https://actionable-blog-posts.netlify.app/index.html</loc>
-    <lastmod>2023-01-21T20:24:43.102Z</lastmod>
+    <lastmod>2023-01-23T10:05:31.769Z</lastmod>
   </url>
   <url>
     <loc>https://actionable-blog-posts.netlify.app/myblog.html</loc>
-    <lastmod>2023-01-21T20:24:43.553Z</lastmod>
+    <lastmod>2023-01-23T10:05:32.284Z</lastmod>
   </url>
   <url>
     <loc>https://actionable-blog-posts.netlify.app/posts/post-with-code/index.html</loc>
@@ -23,5 +23,9 @@
   <url>
     <loc>https://actionable-blog-posts.netlify.app/posts/eda-using-correlationfunnel/eda-with-correlationfunnel.html</loc>
     <lastmod>2023-01-21T16:53:51.884Z</lastmod>
+  </url>
+  <url>
+    <loc>https://actionable-blog-posts.netlify.app/posts/sales-demand-forecasting/sales-demand-forecasting.html</loc>
+    <lastmod>2023-01-23T10:59:54.339Z</lastmod>
   </url>
 </urlset>

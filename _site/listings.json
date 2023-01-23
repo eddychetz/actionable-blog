@@ -2,16 +2,16 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/sales-demand-forecasting/sales-demand-forecasting.html",
       "/posts/post-with-code/index.html",
-      "/posts/eda-using-correlationfunnel/eda-with-correlationfunnel.html",
       "/posts/welcome/index.html"
     ]
   },
   {
     "listing": "/myblog.html",
     "items": [
+      "/posts/sales-demand-forecasting/sales-demand-forecasting.html",
       "/posts/post-with-code/index.html",
-      "/posts/eda-using-correlationfunnel/eda-with-correlationfunnel.html",
       "/posts/welcome/index.html"
     ]
   }

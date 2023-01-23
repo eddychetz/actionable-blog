@@ -1,0 +1,241 @@
+---
+title: "Sales Demand Forecasting"
+author: "Eddwin Cheteni"
+date: "2023-01-23"
+code-fold: true
+code-summary: "Click here to view code"
+categories: 
+    - machine learning
+    - time series analysis 
+    - business science
+    - predictive analytics
+---
+
+## **Project Overview**
+
+***Context***
+
+The growth of supermarkets in most populated cities is increasing and market competitions are also high. The dataset is one of the historical sales of supermarket company which has recorded in 3 different branches for 3 months data. Predictive data analytics methods are easy to apply to this dataset. The data used can be downloaded [here](https://www.kaggle.com/datasets/aungpyaeap/supermarket-sales/download?datasetVersionNumber=3).
+
+***Import Libraries***
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+
+# Data Exploration
+library(tidyverse)
+library(DataExplorer)
+library(skimr)
+library(lubridate)
+library(tidytext)
+library(timetk)
+library(gt)
+library(dataxray)
+# color pallete
+library(tidyquant)
+
+# modeling
+library(tidymodels)
+library(modeltime)
+
+# Visualization
+library(ggplot2)
+library(correlationfunnel)
+```
+
+## 1. Prepare Data
+
+### 1.1 Import Data
+
+Loading the `supermarket_sales` dataset
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+data <- read_csv("./supermarket_sales.csv", 
+      
+    # recast `Date` and `Time` column data types
+    col_types = cols(Date = col_date(format = "%m/%d/%Y"), 
+        Time = col_time(format = "%H:%M")))%>%
+  
+  # recast character to factor data type columns
+    mutate_if(is.character, as_factor)%>%
+  
+    # Renaming Columns: set_names()
+    set_names(names(.) %>% str_replace_all(" ","_"))
+
+# view first 5 rows of the dataset
+data %>%
+  head(5) %>%
+  gt() %>%
+  tab_header(
+    title = "View First 5 Rows of Supermarket Sales Data"
+  )
+  
+```
+
+***Clean Data***
+
+We first need to inspect the data using `skimr`.
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+skim(data)
+```
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+data %>% 
+  plot_missing()
+```
+
+***Wrangle Data***
+
+Sales by Product Line
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+data%>%
+  group_by(Product_line)%>%
+  summarise(total_sales = sum(Total))%>%
+  ungroup()%>%
+  mutate(sales_text = scales::dollar(total_sales))%>%
+  gt()
+
+```
+
+Sales by Gender
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+data %>% 
+  group_by(Gender)%>%
+  summarise(total_sales = sum(Total))%>%
+  ungroup()%>%
+  mutate(sales_text = scales::dollar(total_sales)) %>%
+  gt()
+
+```
+
+Sales by Branch
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+
+data %>% 
+  group_by(Branch)%>%
+  summarise(total_sales = sum(Total))%>%
+  ungroup()%>%
+  mutate(sales_text = scales::dollar(total_sales)) %>%
+  gt()
+
+```
+
+Sales by Customer Type
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+data %>% 
+  group_by(Customer_type)%>%
+  summarise(total_sales = sum(Total))%>%
+  ungroup()%>%
+  mutate(sales_text = scales::dollar(total_sales)) %>%
+  gt()
+```
+
+Sales by city
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+data %>% 
+  group_by(City)%>%
+  summarise(total_sales = sum(Total))%>%
+  ungroup()%>%
+  mutate(sales_text = scales::dollar(total_sales)) %>%
+  gt()
+
+```
+
+### 1.2 Explore
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+
+```
+
+### 1.3 Split
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+
+```
+
+## 2. Build Model
+
+### 2.1 Baseline
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+
+```
+
+### 2.2 Iterate
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+
+```
+
+### 2.3 Evaluate
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+
+```
+
+## 3. Communicate Results
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
+```
