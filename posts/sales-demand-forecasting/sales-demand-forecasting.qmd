@@ -68,15 +68,24 @@ data <- read_csv("./supermarket_sales.csv",
   
     # Renaming Columns: set_names()
     set_names(names(.) %>% str_replace_all(" ","_"))
+  
+  # Reordering columns: select()
+
+```
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+
 
 # view first 5 rows of the dataset
 data %>%
-  head(5) %>%
+  head() %>%
   gt() %>%
   tab_header(
     title = "View First 5 Rows of Supermarket Sales Data"
   )
-  
 ```
 
 ***Clean Data***
@@ -91,18 +100,9 @@ We first need to inspect the data using `skimr`.
 skim(data)
 ```
 
-```{r}
-#| echo: true
-#| message: false
-#| warning: false
+### 1.2 Explore
 
-data %>% 
-  plot_missing()
-```
-
-***Wrangle Data***
-
-Sales by Product Line
+***Sales by Product Line***
 
 ```{r}
 #| echo: true
@@ -113,11 +113,14 @@ data%>%
   summarise(total_sales = sum(Total))%>%
   ungroup()%>%
   mutate(sales_text = scales::dollar(total_sales))%>%
-  gt()
-
+  arrange(desc(total_sales))%>%
+  ggplot(aes(x = Product_line, y = total_sales))+
+  geom_col(aes(fill = Product_line))+
+  coord_flip()+
+  geom_label(aes(label = sales_text, label.padding = 1.5, hjust =1.5))
 ```
 
-Sales by Gender
+***Sales by Gender***
 
 ```{r}
 #| echo: true
@@ -127,12 +130,12 @@ data %>%
   group_by(Gender)%>%
   summarise(total_sales = sum(Total))%>%
   ungroup()%>%
-  mutate(sales_text = scales::dollar(total_sales)) %>%
+  # mutate(sales_text = scales::dollar(total_sales)) %>%
   gt()
 
 ```
 
-Sales by Branch
+***Sales by Branch***
 
 ```{r}
 #| echo: true
@@ -145,11 +148,12 @@ data %>%
   summarise(total_sales = sum(Total))%>%
   ungroup()%>%
   mutate(sales_text = scales::dollar(total_sales)) %>%
-  gt()
-
+  ggplot(aes(x = Branch, y = total_sales))+
+  geom_col(aes(fill = Branch))+
+  geom_label(aes(label = sales_text, label.padding = 1.5))
 ```
 
-Sales by Customer Type
+***Sales by Customer Type***
 
 ```{r}
 #| echo: true
@@ -160,11 +164,11 @@ data %>%
   group_by(Customer_type)%>%
   summarise(total_sales = sum(Total))%>%
   ungroup()%>%
-  mutate(sales_text = scales::dollar(total_sales)) %>%
-  gt()
+  # mutate(sales_text = scales::dollar(total_sales)) %>%
+  gt(rowname_col = "table")
 ```
 
-Sales by city
+***Sales by City***
 
 ```{r}
 #| echo: true
@@ -175,18 +179,26 @@ data %>%
   summarise(total_sales = sum(Total))%>%
   ungroup()%>%
   mutate(sales_text = scales::dollar(total_sales)) %>%
-  gt()
-
+  ggplot(aes(x = City, y = total_sales))+
+  geom_col(aes(fill = City))+
+  geom_label(aes(label = sales_text, label.padding = 1.5))
 ```
 
-### 1.2 Explore
+***Sales by Payment Type***
 
 ```{r}
 #| echo: true
 #| message: false
 #| warning: false
 
-
+data %>% 
+  group_by(Payment)%>%
+  summarise(total_sales = sum(Total))%>%
+  ungroup()%>%
+  mutate(sales_text = scales::dollar(total_sales)) %>%
+    ggplot(aes(x = Payment, y = total_sales))+
+  geom_col(aes(fill = Payment))+
+  geom_label(aes(label = sales_text, label.padding = 1.5))
 ```
 
 ### 1.3 Split
