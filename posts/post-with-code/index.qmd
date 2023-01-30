@@ -3,7 +3,7 @@ title: "Correlation Analysis with R"
 author: "Eddwin Cheteni"
 date: "2023-01-21"
 categories: [problem-solving, intermediate, code, correlation]
-image: "image.jpg"
+image: "image.png"
 code-fold: true
 code-line-numbers: true
 code-summary: "click here to view code"
@@ -20,6 +20,7 @@ For a data science team to build a good model, in-depth correlation analysis may
 
 We need to import data needed for correlation analysis. In this case, we use data for **Home Loan** applicants to perform the analysis.
 :::
+
 ```{r}
 #| echo: true
 #| message: false
@@ -46,9 +47,11 @@ You can perform a quick inspection of your data using `skimr`. This enables you 
 library(skimr)
 skim_without_charts(data)
 ```
+
 ::: {.callout-note appearance="simple"}
 ## A quick summary using `DataExplorer`
 :::
+
 ```{r}
 #| echo: true
 #| message: false
@@ -62,9 +65,11 @@ data%>%
     title = "Missing value plot showing percentage of missing data points"
     )
 ```
+
 ::: {.callout-note appearance="simple"}
 ## A Quick Summary using `dataxray`
 :::
+
 ```{r}
 #| echo: true
 #| message: false
@@ -76,9 +81,9 @@ library(gt)
 data%>%
   make_xray(by = 'Loan_Status')
 ```
+
 ::: {.callout-tip appearance="minimal"}
 ### Correlation Analysis using `correlationfunnel`.
-
 
 This section focused on the use of the `correlationfunnel` library to perform **Correlation Analysis** for the available data provided.
 :::
@@ -95,5 +100,3 @@ data%>%
   correlate(target = Loan_Status__Y)%>%
   plot_correlation_funnel(interactive = TRUE)
 ```
-
-

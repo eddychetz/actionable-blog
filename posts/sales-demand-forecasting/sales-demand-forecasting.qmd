@@ -3,6 +3,7 @@ title: "Sales Demand Forecasting"
 author: "Eddwin Cheteni"
 date: "2023-01-23"
 code-fold: true
+title-block-banner: backgrnd.gif
 code-summary: "Click here to view code"
 categories: 
     - machine learning
@@ -13,11 +14,7 @@ categories:
 
 ## **Project Overview**
 
-***Context***
-
 The growth of supermarkets in most populated cities is increasing and market competitions are also high. The dataset is one of the historical sales of supermarket company which has recorded in 3 different branches for 3 months data. Predictive data analytics methods are easy to apply to this dataset. The data used can be downloaded [here](https://www.kaggle.com/datasets/aungpyaeap/supermarket-sales/download?datasetVersionNumber=3).
-
-***Import Libraries***
 
 ```{r}
 #| echo: false
@@ -26,24 +23,23 @@ The growth of supermarkets in most populated cities is increasing and market com
 
 
 # Data Exploration
-library(tidyverse)
-library(DataExplorer)
-library(skimr)
-library(lubridate)
-library(tidytext)
-library(timetk)
-library(gt)
-library(dataxray)
+library(tidyverse) # core
+library(skimr) # descriptive summary
+library(lubridate) # date manipulation
+library(tidytext) # text manipulation
+library(timetk) # time series
+library(gt) # format table output
+library(dataxray) # quick exploration
 # color pallete
-library(tidyquant)
+library(tidyquant) # quantitative analysis
 
 # modeling
-library(tidymodels)
-library(modeltime)
+library(tidymodels) # ML models
+library(modeltime) # time series models
 
 # Visualization
 library(ggplot2)
-library(correlationfunnel)
+library(correlationfunnel) # correlation analysis
 ```
 
 ## 1. Prepare Data
@@ -68,9 +64,6 @@ data <- read_csv("./supermarket_sales.csv",
   
     # Renaming Columns: set_names()
     set_names(names(.) %>% str_replace_all(" ","_"))
-  
-  # Reordering columns: select()
-
 ```
 
 ```{r}
@@ -90,7 +83,7 @@ data %>%
 
 ***Clean Data***
 
-We first need to inspect the data using `skimr`.
+We first need to inspect the data using `skimr` in order to check the **Data Quality**.
 
 ```{r}
 #| echo: true
@@ -102,47 +95,49 @@ skim(data)
 
 ### 1.2 Explore
 
-***Sales by Product Line***
+#### ***1.2.1 Sales by Product Line***
+
+::: callout-tip
+***Q. Possible business question:***
+
+1.  Which product line generates high sales volume?
+
+2.  Which product line generates low sales volume?
+:::
 
 ```{r}
 #| echo: true
 #| message: false
 #| warning: false
-data%>%
+
+# prepare data
+prdctline_plot <- data%>%
   group_by(Product_line)%>%
   summarise(total_sales = sum(Total))%>%
-  ungroup()%>%
-  mutate(sales_text = scales::dollar(total_sales))%>%
-  arrange(desc(total_sales))%>%
+  arrange(desc(total_sales), .by_group = TRUE)%>%
+  mutate(sales_text = scales::dollar(total_sales))
+
+# visualize data
+prdctline_plot%>%
   ggplot(aes(x = Product_line, y = total_sales))+
   geom_col(aes(fill = Product_line))+
+  # facet_wrap(~Gender)+
   coord_flip()+
-  geom_label(aes(label = sales_text, label.padding = 1.5, hjust =1.5))
+  geom_label(aes(label = sales_text, label.padding = 1.5, hjust =1))
 ```
 
-***Sales by Gender***
+Some group of products experience high sales while others get low sales volume. *Sports and travel*, and *Food and beverages* have more than \$55 000 of total sales while *Health and beauty* side indicates sales below \$50 000. The Supermarket might be interested in boosting *Health and beauty* sales as revealed by the above visualization.
 
-```{r}
-#| echo: true
-#| message: false
-#| warning: false
-data %>% 
-  group_by(Gender)%>%
-  summarise(total_sales = sum(Total))%>%
-  ungroup()%>%
-  # mutate(sales_text = scales::dollar(total_sales)) %>%
-  gt()
+Let's consider other features and identify patterns and trends in the product infrmation.
 
-```
-
-***Sales by Branch***
+#### ***1.2.2 Sales by Branch***
 
 ```{r}
 #| echo: true
 #| message: false
 #| warning: false
 
-
+# prepare data
 data %>% 
   group_by(Branch)%>%
   summarise(total_sales = sum(Total))%>%
